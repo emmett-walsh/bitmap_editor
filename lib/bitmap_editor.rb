@@ -8,10 +8,12 @@ class BitmapEditor
   end
 
   def run(file)
-    return puts "please provide correct file" if file.nil? || !File.exists?(file)
-
+    return puts "Please provide correct file" if file_missing?(file)
+    @first_command = true
     File.open(file).each do |line|
       command = line.chomp.split
+      return puts "Invalid first command. List of commands must start with \"I\"" if invalid_first_command?(command)
+      return puts "Calling \"I\" multiple times will clear the bitmap." if multiple_new_commands?(command)
       case command[0]
       when "I"
         @bitmap_array = @command_processor_class.create(command[1].to_i, command[2].to_i)
@@ -28,6 +30,21 @@ class BitmapEditor
       else
         puts "unrecognised command :("
       end
+      @first_command = false
     end
+  end
+
+  private
+
+  def file_missing?(file)
+    file.nil? || !File.exists?(file)
+  end
+
+  def invalid_first_command?(command)
+    @first_command && command[0] != "I"
+  end
+
+  def multiple_new_commands?(command)
+    !@first_command && command[0] == "I"
   end
 end
