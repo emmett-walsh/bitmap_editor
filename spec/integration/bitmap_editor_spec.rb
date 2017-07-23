@@ -38,6 +38,15 @@ describe "Bitmap editor" do
     "OOOOO"
   end
 
+  let(:out_of_order_bitmap) do
+    "OOOOO\n"\
+    "OOOOZ\n"\
+    "OOOOZ\n"\
+    "OOWWZ\n"\
+    "OOOOO\n"\
+    "OOOOO"
+  end
+
   let(:big_bitmap) do
     "OOOOOOOOOOOOOOO\n"\
     "OOOOOOOOOOOOOOO\n"\
@@ -79,6 +88,11 @@ describe "Bitmap editor" do
   it "draws a horizontal line of colour between specified pixels" do
     horizontal_line_file_path = File.join(File.expand_path(Dir.pwd), "/examples/horizontal_line.txt")
     expect(bitmap_editor.run(horizontal_line_file_path)).to eq horizontal_line_bitmap
+  end
+
+  it "can process start and end points in any order on \"H\" and \"V\" commands" do
+    out_of_order_h_v_file_path = File.join(File.expand_path(Dir.pwd), "/examples/out_of_order_h_v.txt")
+    expect(bitmap_editor.run(out_of_order_h_v_file_path)).to eq out_of_order_bitmap
   end
 
   it "can process large bitmaps" do

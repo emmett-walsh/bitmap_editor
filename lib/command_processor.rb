@@ -20,15 +20,19 @@ class CommandProcessor
   end
 
   def self.draw_vertical_line(bitmap_array, column, start_row, end_row, colour)
-    (start_row - 1).upto(end_row - 1) do |index|
+    start_point = (start_row < end_row) ? start_row : end_row
+    end_point = (start_row < end_row) ? end_row : start_row
+    (start_point - 1).upto(end_point - 1) do |index|
       bitmap_array[index][column - 1] = colour
     end
     bitmap_array
   end
 
   def self.draw_horizontal_line(bitmap_array, start_column, end_column, row, colour)
+    start_point = (start_column < end_column) ? start_column : end_column
+    end_point = (start_column < end_column) ? end_column : start_column
     target_row = bitmap_array[row - 1]
-    (start_column - 1).upto(end_column - 1) do |index|
+    (start_point - 1).upto(end_point - 1) do |index|
       target_row[index] = colour
     end
     bitmap_array
