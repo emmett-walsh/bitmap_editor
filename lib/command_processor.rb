@@ -19,6 +19,13 @@ class CommandProcessor
     bitmap_array
   end
 
+  def self.draw_vertical_line(bitmap_array, column, start_row, end_row, colour)
+    (start_row - 1).upto(end_row - 1) do |index|
+      bitmap_array[index][column - 1] = colour
+    end
+    bitmap_array
+  end
+
   private
 
   def self.create_row(number_of_columns)

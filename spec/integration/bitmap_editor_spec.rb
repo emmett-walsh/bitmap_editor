@@ -19,6 +19,15 @@ describe "Bitmap editor" do
     "OOOOO"
   end
 
+  let(:vertical_line_bitmap) do
+    "OOOOO\n"\
+    "OOOOO\n"\
+    "OWOOO\n"\
+    "OWOOO\n"\
+    "OWOOO\n"\
+    "OWOOO"
+  end
+
   it "creates a new bitmap" do
     new_bitmap_file_path = File.join(File.expand_path(Dir.pwd), "/examples/show.txt")
     expect(BitmapEditor.new.run(new_bitmap_file_path)).to eq white_bitmap
@@ -32,5 +41,10 @@ describe "Bitmap editor" do
   it "clears a bitmap, setting all pixels to white" do
     clear_bitmap_file_path = File.join(File.expand_path(Dir.pwd), "/examples/clear.txt")
     expect(BitmapEditor.new.run(clear_bitmap_file_path)).to eq white_bitmap
+  end
+
+  it "draws a vertical line of colour between specified pixels" do
+    vertical_line_file_path = File.join(File.expand_path(Dir.pwd), "/examples/vertical_line.txt")
+    expect(BitmapEditor.new.run(vertical_line_file_path)).to eq vertical_line_bitmap
   end
 end

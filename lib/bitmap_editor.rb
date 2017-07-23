@@ -14,6 +14,8 @@ class BitmapEditor
         @bitmap_array = CommandProcessor.set_pixel(@bitmap_array, command[2].to_i, command[4].to_i, command[6])
       when "C"
         @bitmap_array = CommandProcessor.clear(@bitmap_array)
+      when "V"
+        @bitmap_array = CommandProcessor.draw_vertical_line(@bitmap_array, command[2].to_i, command[4].to_i, command[6].to_i, command[8])
       when "S"
         return Renderer.render(@bitmap_array)
       else
