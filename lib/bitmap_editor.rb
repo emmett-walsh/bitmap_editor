@@ -10,6 +10,8 @@ class BitmapEditor
       case command[0]
       when "I"
         @bitmap_array = CommandProcessor.create(command[2].to_i, command[4].to_i)
+      when "L"
+        @bitmap_array = CommandProcessor.set_pixel(@bitmap_array, command[2].to_i, command[4].to_i, command[6])
       when "S"
         return Renderer.render(@bitmap_array)
       else

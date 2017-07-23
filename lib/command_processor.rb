@@ -1,7 +1,15 @@
 class CommandProcessor
   def self.create(number_of_columns, number_of_rows)
-    row = create_row(number_of_columns)
-    insert_rows(number_of_rows, row)
+    bitmap_array = []
+    number_of_rows.times do
+      bitmap_array << create_row(number_of_columns)
+    end
+    bitmap_array
+  end
+
+  def self.set_pixel(bitmap_array, column_number, row_number, colour)
+    bitmap_array[row_number - 1][column_number - 1] = colour
+    bitmap_array
   end
 
   private
@@ -12,13 +20,5 @@ class CommandProcessor
       row << "O"
     end
     row
-  end
-
-  def self.insert_rows(number_of_rows, row)
-    bitmap_array = []
-    number_of_rows.times do
-      bitmap_array << row
-    end
-    bitmap_array
   end
 end
