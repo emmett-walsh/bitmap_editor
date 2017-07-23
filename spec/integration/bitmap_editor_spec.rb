@@ -104,7 +104,7 @@ describe "Bitmap editor" do
     bitmap_editor.run(oversize_bitmap_file_path)
   end
 
-  it "rejects negative grid references" do
+  it "rejects negative grid references for \"I\" command" do
     negative_grid_reference_file_path = File.join(File.expand_path(Dir.pwd), "/examples/negative_grid_reference.txt")
     expect(STDOUT).to receive(:puts).with("Invalid grid reference.")
     bitmap_editor.run(negative_grid_reference_file_path)
