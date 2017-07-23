@@ -37,8 +37,26 @@ describe "Bitmap editor" do
     "OOOOO"
   end
 
+  let(:big_bitmap) do
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO\n"\
+    "OOOOOOOOOOOOOOO"
+  end
+
   it "creates a new bitmap" do
-    new_bitmap_file_path = File.join(File.expand_path(Dir.pwd), "/examples/show.txt")
+    new_bitmap_file_path = File.join(File.expand_path(Dir.pwd), "/examples/display.txt")
     expect(BitmapEditor.new.run(new_bitmap_file_path)).to eq white_bitmap
   end
 
@@ -60,5 +78,10 @@ describe "Bitmap editor" do
   it "draws a horizontal line of colour between specified pixels" do
     horizontal_line_file_path = File.join(File.expand_path(Dir.pwd), "/examples/horizontal_line.txt")
     expect(BitmapEditor.new.run(horizontal_line_file_path)).to eq horizontal_line_bitmap
+  end
+
+  it "can process large bitmaps" do
+    big_bitmap_file_path = File.join(File.expand_path(Dir.pwd), "/examples/big_bitmap.txt")
+    expect(BitmapEditor.new.run(big_bitmap_file_path)).to eq big_bitmap
   end
 end
