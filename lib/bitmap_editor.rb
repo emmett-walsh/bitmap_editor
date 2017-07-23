@@ -62,17 +62,32 @@ class BitmapEditor
       raise "Bitmap must be between 1 and 250 pixels." unless valid_command?(command)
       @bitmap_array = @command_processor_class.create(command[:number_of_columns], command[:number_of_rows])
     when "L"
+      raise "Command range exceeds size of bitmap." if out_of_bounds_l?(command)
       @bitmap_array = @command_processor_class.set_pixel(@bitmap_array, command[:column_number], command[:row_number], command[:colour])
     when "C"
       @bitmap_array = @command_processor_class.clear(@bitmap_array)
     when "V"
+      raise "Command range exceeds size of bitmap." if out_of_bounds_v?(command)
       @bitmap_array = @command_processor_class.draw_vertical_line(@bitmap_array, command[:column], command[:start_row], command[:end_row], command[:colour])
     when "H"
+      raise "Command range exceeds size of bitmap." if out_of_bounds_h?(command)
       @bitmap_array = @command_processor_class.draw_horizontal_line(@bitmap_array, command[:start_column], command[:end_column], command[:row], command[:colour])
     end
   end
 
   def valid_command?(command)
     command[:number_of_columns].to_i <= MAX_GRID_SIZE && command[:number_of_rows].to_i <= MAX_GRID_SIZE
+  end
+
+  def out_of_bounds_l?(command)
+    command[:column_number] > @bitmap_array[0].length || command[:row_number] > @bitmap_array.length
+  end
+
+  def out_of_bounds_h?(command)
+    command[:start_column] > @bitmap_array[0].length || command[:end_column] > @bitmap_array[0].length || command[:row] > @bitmap_array.length
+  end
+
+  def out_of_bounds_v?(command)
+    command[:column] > @bitmap_array[0].length || command[:start_row] > @bitmap_array.length || command[:end_row] > @bitmap_array.length
   end
 end

@@ -121,4 +121,22 @@ describe "Bitmap editor" do
     expect(STDOUT).to receive(:puts).with("Unrecognised command.")
     bitmap_editor.run(invalid_command_file_path)
   end
+
+  it "prevents out of bound references on \"L\" command" do
+    out_of_bounds_l_file_path = File.join(File.expand_path(Dir.pwd), "/examples/out_of_bounds_l.txt")
+    expect(STDOUT).to receive(:puts).with("Command range exceeds size of bitmap.")
+    bitmap_editor.run(out_of_bounds_l_file_path)
+  end
+
+  it "prevents out of bound references on \"H\" command" do
+    out_of_bounds_h_file_path = File.join(File.expand_path(Dir.pwd), "/examples/out_of_bounds_h.txt")
+    expect(STDOUT).to receive(:puts).with("Command range exceeds size of bitmap.")
+    bitmap_editor.run(out_of_bounds_h_file_path)
+  end
+
+  it "prevents out of bound references on \"V\" command" do
+    out_of_bounds_v_file_path = File.join(File.expand_path(Dir.pwd), "/examples/out_of_bounds_v.txt")
+    expect(STDOUT).to receive(:puts).with("Command range exceeds size of bitmap.")
+    bitmap_editor.run(out_of_bounds_v_file_path)
+  end
 end
