@@ -1,6 +1,6 @@
-require "command_cleaner"
-require "command_processor"
-require "renderer"
+require_relative "./command_cleaner"
+require_relative "./command_processor"
+require_relative "./renderer"
 
 class BitmapEditor
   MAX_GRID_SIZE = 250
@@ -15,7 +15,11 @@ class BitmapEditor
     return puts "Please provide correct file" if file_missing?(file)
     @first_command = true
     File.open(file).each do |line|
-      command = @command_cleaner_class.clean(line.chomp)
+      begin
+        command = @command_cleaner_class.clean(line.chomp)
+      rescue Exception => e
+        return puts e.message
+      end
       return puts "Invalid first command. List of commands must start with \"I\"" if invalid_first_command?(command)
       return puts "Calling \"I\" multiple times will clear the bitmap." if multiple_new_commands?(command)
       return puts "Invalid grid reference." if invalid_grid_reference?(command)
@@ -65,8 +69,6 @@ class BitmapEditor
       @bitmap_array = @command_processor_class.draw_vertical_line(@bitmap_array, command[:column], command[:start_row], command[:end_row], command[:colour])
     when "H"
       @bitmap_array = @command_processor_class.draw_horizontal_line(@bitmap_array, command[:start_column], command[:end_column], command[:row], command[:colour])
-    else
-      raise "unrecognised command :("
     end
   end
 

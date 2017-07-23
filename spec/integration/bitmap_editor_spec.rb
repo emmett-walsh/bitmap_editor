@@ -109,4 +109,16 @@ describe "Bitmap editor" do
     expect(STDOUT).to receive(:puts).with("Invalid grid reference.")
     bitmap_editor.run(negative_grid_reference_file_path)
   end
+
+  it "validates parameters for each command" do
+    invalid_arguments_file_path = File.join(File.expand_path(Dir.pwd), "/examples/invalid_arguments.txt")
+    expect(STDOUT).to receive(:puts).with("Invalid arguments.")
+    bitmap_editor.run(invalid_arguments_file_path)
+  end
+
+  it "rejects any unknown commands" do
+    invalid_command_file_path = File.join(File.expand_path(Dir.pwd), "/examples/invalid_command.txt")
+    expect(STDOUT).to receive(:puts).with("Unrecognised command.")
+    bitmap_editor.run(invalid_command_file_path)
+  end
 end
