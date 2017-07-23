@@ -16,6 +16,7 @@ class BitmapEditor
       return puts "Calling \"I\" multiple times will clear the bitmap." if multiple_new_commands?(command)
       case command[0]
       when "I"
+        return puts "Bitmap must be between 1 and 250 pixels." unless valid_command?(command)
         @bitmap_array = @command_processor_class.create(command[1].to_i, command[2].to_i)
       when "L"
         @bitmap_array = @command_processor_class.set_pixel(@bitmap_array, command[1].to_i, command[2].to_i, command[3])
@@ -28,7 +29,7 @@ class BitmapEditor
       when "S"
         return @renderer_class.render(@bitmap_array)
       else
-        puts "unrecognised command :("
+        return puts "unrecognised command :("
       end
       @first_command = false
     end
@@ -46,5 +47,9 @@ class BitmapEditor
 
   def multiple_new_commands?(command)
     !@first_command && command[0] == "I"
+  end
+
+  def valid_command?(command)
+    command[1].to_i <= 250 && command[2].to_i <= 250
   end
 end

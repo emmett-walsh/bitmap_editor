@@ -94,7 +94,13 @@ describe "Bitmap editor" do
 
   it "won't accept \"I\" after first command" do
     multiple_new_commands_file_path = File.join(File.expand_path(Dir.pwd), "/examples/multiple_new_commands.txt")
-      expect(STDOUT).to receive(:puts).with("Calling \"I\" multiple times will clear the bitmap.")
+    expect(STDOUT).to receive(:puts).with("Calling \"I\" multiple times will clear the bitmap.")
     bitmap_editor.run(multiple_new_commands_file_path)
+  end
+
+  it "limits grid size to 250 x 250 pixels" do
+    oversize_bitmap_file_path = File.join(File.expand_path(Dir.pwd), "/examples/oversize_bitmap.txt")
+    expect(STDOUT).to receive(:puts).with("Bitmap must be between 1 and 250 pixels.")
+    bitmap_editor.run(oversize_bitmap_file_path)
   end
 end
