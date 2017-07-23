@@ -58,6 +58,25 @@ describe CommandProcessor do
     ]
   end
 
+  let(:five_by_six_horizontal_line_array) do
+    [
+      ["O","O","O","O","O"],
+      ["O","O","Z","Z","Z"],
+      ["O","O","O","O","O"],
+      ["O","O","O","O","O"],
+      ["O","O","O","O","O"],
+      ["O","O","O","O","O"]
+    ]
+  end
+
+  let(:two_by_three_horizontal_line_array) do
+    [
+      ["O","O"],
+      ["O","O"],
+      ["Z","Z"]
+    ]
+  end
+
   describe ".create" do
     it "creates a white grid" do
       expect(CommandProcessor.create(5,6)).to eq five_by_six_white_array
@@ -95,6 +114,16 @@ describe CommandProcessor do
 
     it "sets any vertical line of specified pixels to a given colour" do
       expect(CommandProcessor.draw_vertical_line(two_by_three_white_array, 2, 3, 3, "W")).to eq two_by_three_vertical_line_array
+    end
+  end
+
+  describe ".draw_horizontal_line" do
+    it "sets a horizontal line of specified pixels to a given colour" do
+      expect(CommandProcessor.draw_horizontal_line(five_by_six_white_array, 3, 5, 2, "Z")).to eq five_by_six_horizontal_line_array
+    end
+
+    it "sets any horizontal line of specified pixels to a given colour" do
+      expect(CommandProcessor.draw_horizontal_line(two_by_three_white_array, 1, 2, 3, "Z")).to eq two_by_three_horizontal_line_array
     end
   end
 end

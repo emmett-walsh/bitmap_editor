@@ -28,6 +28,15 @@ describe "Bitmap editor" do
     "OWOOO"
   end
 
+  let(:horizontal_line_bitmap) do
+    "OOOOO\n"\
+    "OOZZZ\n"\
+    "OOOOO\n"\
+    "OOOOO\n"\
+    "OOOOO\n"\
+    "OOOOO"
+  end
+
   it "creates a new bitmap" do
     new_bitmap_file_path = File.join(File.expand_path(Dir.pwd), "/examples/show.txt")
     expect(BitmapEditor.new.run(new_bitmap_file_path)).to eq white_bitmap
@@ -46,5 +55,10 @@ describe "Bitmap editor" do
   it "draws a vertical line of colour between specified pixels" do
     vertical_line_file_path = File.join(File.expand_path(Dir.pwd), "/examples/vertical_line.txt")
     expect(BitmapEditor.new.run(vertical_line_file_path)).to eq vertical_line_bitmap
+  end
+
+  it "draws a horizontal line of colour between specified pixels" do
+    horizontal_line_file_path = File.join(File.expand_path(Dir.pwd), "/examples/horizontal_line.txt")
+    expect(BitmapEditor.new.run(horizontal_line_file_path)).to eq horizontal_line_bitmap
   end
 end

@@ -26,6 +26,14 @@ class CommandProcessor
     bitmap_array
   end
 
+  def self.draw_horizontal_line(bitmap_array, start_column, end_column, row, colour)
+    target_row = bitmap_array[row - 1]
+    (start_column - 1).upto(end_column - 1) do |index|
+      target_row[index] = colour
+    end
+    bitmap_array
+  end
+
   private
 
   def self.create_row(number_of_columns)
