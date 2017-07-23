@@ -103,4 +103,10 @@ describe "Bitmap editor" do
     expect(STDOUT).to receive(:puts).with("Bitmap must be between 1 and 250 pixels.")
     bitmap_editor.run(oversize_bitmap_file_path)
   end
+
+  it "rejects negative grid references" do
+    negative_grid_reference_file_path = File.join(File.expand_path(Dir.pwd), "/examples/negative_grid_reference.txt")
+    expect(STDOUT).to receive(:puts).with("Invalid grid reference.")
+    bitmap_editor.run(negative_grid_reference_file_path)
+  end
 end

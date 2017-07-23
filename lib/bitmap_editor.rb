@@ -14,6 +14,7 @@ class BitmapEditor
       command = line.chomp.split
       return puts "Invalid first command. List of commands must start with \"I\"" if invalid_first_command?(command)
       return puts "Calling \"I\" multiple times will clear the bitmap." if multiple_new_commands?(command)
+      return puts "Invalid grid reference." if invalid_grid_reference?(command)
       case command[0]
       when "I"
         return puts "Bitmap must be between 1 and 250 pixels." unless valid_command?(command)
@@ -47,6 +48,15 @@ class BitmapEditor
 
   def multiple_new_commands?(command)
     !@first_command && command[0] == "I"
+  end
+
+  def invalid_grid_reference?(command)
+    case command[0]
+    when "I", "L", "V", "H"
+      return command[1].to_i < 0 || command[2].to_i < 0
+    else
+      return false
+    end
   end
 
   def valid_command?(command)
