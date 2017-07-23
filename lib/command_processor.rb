@@ -12,6 +12,13 @@ class CommandProcessor
     bitmap_array
   end
 
+  def self.clear(bitmap_array)
+    bitmap_array.each do |row|
+      row.map! { |_pixel| "O" }
+    end
+    bitmap_array
+  end
+
   private
 
   def self.create_row(number_of_columns)

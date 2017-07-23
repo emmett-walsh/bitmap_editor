@@ -28,4 +28,9 @@ describe "Bitmap editor" do
     change_pixel_file_path = File.join(File.expand_path(Dir.pwd), "/examples/change_pixel.txt")
     expect(BitmapEditor.new.run(change_pixel_file_path)).to eq change_pixel_bitmap
   end
+
+  it "clears a bitmap, setting all pixels to white" do
+    clear_bitmap_file_path = File.join(File.expand_path(Dir.pwd), "/examples/clear.txt")
+    expect(BitmapEditor.new.run(clear_bitmap_file_path)).to eq white_bitmap
+  end
 end
