@@ -19,22 +19,11 @@ class BitmapEditor
       return puts "Invalid first command. List of commands must start with \"I\"" if invalid_first_command?(command)
       return puts "Calling \"I\" multiple times will clear the bitmap." if multiple_new_commands?(command)
       return puts "Invalid grid reference." if invalid_grid_reference?(command)
-      case command[:command]
-      when "I"
-        return puts "Bitmap must be between 1 and 250 pixels." unless valid_command?(command)
-        @bitmap_array = @command_processor_class.create(command[:number_of_columns], command[:number_of_rows])
-      when "L"
-        @bitmap_array = @command_processor_class.set_pixel(@bitmap_array, command[:column_number], command[:row_number], command[:colour])
-      when "C"
-        @bitmap_array = @command_processor_class.clear(@bitmap_array)
-      when "V"
-        @bitmap_array = @command_processor_class.draw_vertical_line(@bitmap_array, command[:column], command[:start_row], command[:end_row], command[:colour])
-      when "H"
-        @bitmap_array = @command_processor_class.draw_horizontal_line(@bitmap_array, command[:start_column], command[:end_column], command[:row], command[:colour])
-      when "S"
-        return @renderer_class.render(@bitmap_array)
-      else
-        return puts "unrecognised command :("
+      return @renderer_class.render(@bitmap_array) if command[:command] == "S"
+      begin
+        process_command(command)
+      rescue Exception => e
+        return puts e.message
       end
       @first_command = false
     end
@@ -57,9 +46,27 @@ class BitmapEditor
   def invalid_grid_reference?(command)
     case command[:command]
     when "I"
-      return command[:number_of_columns].to_i < 0 || command[:number_of_rows].to_i < 0
+      return command[:number_of_columns] <= 0 || command[:number_of_rows] <= 0
     else
       return false
+    end
+  end
+
+  def process_command(command)
+    case command[:command]
+    when "I"
+      raise "Bitmap must be between 1 and 250 pixels." unless valid_command?(command)
+      @bitmap_array = @command_processor_class.create(command[:number_of_columns], command[:number_of_rows])
+    when "L"
+      @bitmap_array = @command_processor_class.set_pixel(@bitmap_array, command[:column_number], command[:row_number], command[:colour])
+    when "C"
+      @bitmap_array = @command_processor_class.clear(@bitmap_array)
+    when "V"
+      @bitmap_array = @command_processor_class.draw_vertical_line(@bitmap_array, command[:column], command[:start_row], command[:end_row], command[:colour])
+    when "H"
+      @bitmap_array = @command_processor_class.draw_horizontal_line(@bitmap_array, command[:start_column], command[:end_column], command[:row], command[:colour])
+    else
+      raise "unrecognised command :("
     end
   end
 
